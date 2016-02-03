@@ -47,7 +47,10 @@ public class HibernateSessionFactoryHelper
 	 */
 	public static Session getAuditSession(SessionFactory sessionFactory) throws HibernateException
 	{
-		return sessionFactory.openSession(new ObjectStateInterceptor());
+		//sessionFactory.openSession(new ObjectStateInterceptor());
+		return sessionFactory.withOptions()
+            .interceptor(new ObjectStateInterceptor())
+            .openSession();
 	}
 
 	/**
@@ -58,7 +61,10 @@ public class HibernateSessionFactoryHelper
 	public static Session getDefaultAuditSession() throws HibernateException
 	{
 	   Configuration cfg = new Configuration();
-	   return cfg.configure().buildSessionFactory().openSession(new ObjectStateInterceptor());
+	 //  return cfg.configure().buildSessionFactory().openSession(new ObjectStateInterceptor());
+	   return cfg.configure().buildSessionFactory().withOptions()
+           .interceptor(new ObjectStateInterceptor())
+           .openSession();
 	
 	}
 	
